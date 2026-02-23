@@ -1,0 +1,170 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.7.0",
+  "resource_changes": [
+    {
+      "address": "aws_s3_bucket.logs",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["create"],
+        "before": null,
+        "after": {
+          "bucket": "my-logs-bucket",
+          "acl": "private",
+          "tags": {
+            "Environment": "production",
+            "Team": "platform"
+          }
+        },
+        "after_unknown": {
+          "arn": true,
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket.data",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "data",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["create"],
+        "before": null,
+        "after": {
+          "bucket": "my-data-bucket",
+          "acl": "private",
+          "tags": {
+            "Environment": "production",
+            "Team": "data"
+          }
+        },
+        "after_unknown": {
+          "arn": true,
+          "id": true
+        },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_security_group.web",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["update"],
+        "before": {
+          "id": "sg-12345",
+          "name": "web-sg",
+          "description": "Web security group",
+          "ingress": [
+            {
+              "from_port": 443,
+              "to_port": 443,
+              "protocol": "tcp",
+              "cidr_blocks": ["10.0.0.0/8"]
+            }
+          ],
+          "tags": {
+            "Environment": "staging",
+            "Team": "platform"
+          }
+        },
+        "after": {
+          "id": "sg-12345",
+          "name": "web-sg",
+          "description": "Web security group",
+          "ingress": [
+            {
+              "from_port": 443,
+              "to_port": 443,
+              "protocol": "tcp",
+              "cidr_blocks": ["0.0.0.0/0"]
+            }
+          ],
+          "tags": {
+            "Environment": "production",
+            "Team": "platform"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_instance.web",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "web",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["update"],
+        "before": {
+          "id": "i-abc123",
+          "ami": "ami-old",
+          "instance_type": "t3.micro",
+          "tags": {
+            "Name": "web-server",
+            "Environment": "staging"
+          }
+        },
+        "after": {
+          "id": "i-abc123",
+          "ami": "ami-new",
+          "instance_type": "t3.small",
+          "tags": {
+            "Name": "web-server",
+            "Environment": "production"
+          }
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_iam_role.old_deploy",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "old_deploy",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "id": "old-deploy-role",
+          "name": "old-deploy",
+          "assume_role_policy": "{\"Version\":\"2012-10-17\"}",
+          "tags": {
+            "Environment": "staging"
+          }
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "output_changes": {
+    "bucket_arn": {
+      "actions": ["create"],
+      "before": null,
+      "after": "arn:aws:s3:::my-logs-bucket",
+      "before_sensitive": false,
+      "after_sensitive": false
+    }
+  }
+}

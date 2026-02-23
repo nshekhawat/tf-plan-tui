@@ -1,0 +1,172 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.7.0",
+  "resource_changes": [
+    {
+      "address": "module.vpc.aws_vpc.main",
+      "module_address": "module.vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete", "create"],
+        "before": {
+          "id": "vpc-old",
+          "cidr_block": "10.0.0.0/16",
+          "enable_dns_hostnames": true,
+          "tags": { "Environment": "staging", "Name": "main-vpc" }
+        },
+        "after": {
+          "cidr_block": "10.1.0.0/16",
+          "enable_dns_hostnames": true,
+          "tags": { "Environment": "production", "Name": "main-vpc" }
+        },
+        "after_unknown": { "id": true, "arn": true },
+        "before_sensitive": {},
+        "after_sensitive": {}
+      },
+      "action_reason": "replace_because_cannot_update"
+    },
+    {
+      "address": "module.vpc.aws_subnet.private[0]",
+      "module_address": "module.vpc",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private",
+      "index": 0,
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "id": "subnet-aaa",
+          "cidr_block": "10.0.1.0/24",
+          "vpc_id": "vpc-old",
+          "availability_zone": "us-east-1a"
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "module.vpc.aws_subnet.private[1]",
+      "module_address": "module.vpc",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private",
+      "index": 1,
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "id": "subnet-bbb",
+          "cidr_block": "10.0.2.0/24",
+          "vpc_id": "vpc-old",
+          "availability_zone": "us-east-1b"
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "module.db.aws_db_instance.main",
+      "module_address": "module.db",
+      "mode": "managed",
+      "type": "aws_db_instance",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete", "create"],
+        "before": {
+          "id": "mydb",
+          "engine": "postgres",
+          "engine_version": "14.9",
+          "instance_class": "db.t3.medium",
+          "allocated_storage": 100,
+          "deletion_protection": true,
+          "publicly_accessible": false,
+          "password": "secret123"
+        },
+        "after": {
+          "engine": "postgres",
+          "engine_version": "15.4",
+          "instance_class": "db.t3.large",
+          "allocated_storage": 200,
+          "deletion_protection": false,
+          "publicly_accessible": true,
+          "password": "newsecret456"
+        },
+        "after_unknown": { "id": true, "arn": true, "endpoint": true },
+        "before_sensitive": { "password": true },
+        "after_sensitive": { "password": true }
+      },
+      "action_reason": "replace_because_cannot_update"
+    },
+    {
+      "address": "aws_eks_cluster.main",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_eks_cluster",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "id": "my-cluster",
+          "name": "my-cluster",
+          "version": "1.28",
+          "role_arn": "arn:aws:iam::123456789:role/eks-role"
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket.backups",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "backups",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "id": "my-backups-bucket",
+          "bucket": "my-backups-bucket",
+          "tags": { "Purpose": "backups" }
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_iam_role.deploy",
+      "module_address": "",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "deploy",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "id": "deploy-role",
+          "name": "deploy",
+          "assume_role_policy": "{}"
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    }
+  ],
+  "output_changes": {}
+}
